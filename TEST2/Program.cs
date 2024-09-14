@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 class ProgramMain()
@@ -47,28 +48,9 @@ class ProgramMain()
 		}
 		Console.WriteLine("Данные записаны.");
 	}
-}
-
-	public class Person
+	public record Person(string LastName, string FirstName, string Patronymic, bool Sex, float Weight, DateTime DateOfBirth)
 	{
-		public string LastName { get; }
-		public string FirstName { get; }
-		public string Patronymic { get; }
-		private bool _Sex;
-		// public bool Sex { get { return _sex; } }
-		public float Weight { get; }
-		public DateTime DateOfBirth { get; }
-		public int Age { get { return CalculateAge(); } }
-
-		public Person(string lastName, string firstName, string patronymic, bool sex, float weight, DateTime dateOfBirth)
-		{
-			LastName = lastName;
-			FirstName = firstName;
-			Patronymic = patronymic;
-			_Sex = sex;
-			Weight = weight;
-			DateOfBirth = dateOfBirth;
-		}
+		public int Age => CalculateAge();
 
 		private int CalculateAge()
 		{
@@ -80,24 +62,31 @@ class ProgramMain()
 			}
 			return age;
 		}
+
 		public static Person Parse(string text)
 		{
 			var parts = text.Split(';');
 			if (parts.Length != 6) throw new FormatException("Invalid format of input string");
+
 			string lastName = parts[0];
 			string firstName = parts[1];
 			string patronymic = parts[2];
 			bool sex = bool.Parse(parts[3]);
 			float weight = float.Parse(parts[4]);
 			DateTime dateOfBirth = DateTime.Parse(parts[5]);
+
 			return new Person(lastName, firstName, patronymic, sex, weight, dateOfBirth);
 		}
+
 		public override string ToString()
 		{
-			return $"{LastName} {FirstName} {Patronymic}; {_Sex}; {Weight}; {DateOfBirth}; {Age}";
+			string dateOfBirthFormatted = DateOfBirth.ToString("dd-MM-yyyy");
+			string weightFormatted = Weight.ToString("E1");
+			return $"{LastName} {FirstName} {Patronymic}; {Sex}; {weightFormatted}; {dateOfBirthFormatted}; {Age}";
 		}
-
 	}
+}
+
 
 
 
