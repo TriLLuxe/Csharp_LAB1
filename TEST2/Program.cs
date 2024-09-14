@@ -71,7 +71,7 @@ class ProgramMain()
 			string lastName = parts[0];
 			string firstName = parts[1];
 			string patronymic = parts[2];
-			bool sex = bool.Parse(parts[3]);
+			bool sex = parts[3] == "Муж." ? true : parts[3] == "Жен." ? false : throw new FormatException("Invalid sex format");
 			float weight = float.Parse(parts[4]);
 			DateTime dateOfBirth = DateTime.Parse(parts[5]);
 
@@ -82,7 +82,8 @@ class ProgramMain()
 		{
 			string dateOfBirthFormatted = DateOfBirth.ToString("dd-MM-yyyy");
 			string weightFormatted = Weight.ToString("E1");
-			return $"{LastName} {FirstName} {Patronymic}; {Sex}; {weightFormatted}; {dateOfBirthFormatted}; {Age}";
+			string sexFormatted = Sex ? "Муж." : "Жен.";
+			return $"{LastName} {FirstName} {Patronymic}; {sexFormatted}; {weightFormatted}; {dateOfBirthFormatted}; {Age}";
 		}
 	}
 }
