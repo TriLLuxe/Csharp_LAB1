@@ -84,7 +84,7 @@ class ProgramMain
             bool sex = parts[3] == "Муж." ? true : parts[3] == "Жен." ? false : throw new FormatException("Invalid sex format");
             float weight = float.Parse(parts[4]);
             DateTime dateOfBirth = DateTime.Parse(parts[5]);
-			if (dateOfBirth>DateTime.Now) throw new FormatException("Invalid date of birth format {dateOfBirth}");
+			if (dateOfBirth>DateTime.Now) throw new FormatException($"Invalid date of birth format: {dateOfBirth}");
 
             return new Person(lastName, firstName, patronymic, sex, weight, dateOfBirth);
         }
